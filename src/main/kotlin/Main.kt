@@ -13,5 +13,5 @@ fun main() {
     g.addNode(7)
 
     g.bfs(startNode = 0)
-    g.visualizeGraph()
+    g.visualizeGraph(startPaused = true, screenTitle = "A BFS search from node 0")
 }
