@@ -1,21 +1,18 @@
 import graphMateKT.graphClasses.Graph
 
 fun main() {
-    val input = generateSequence { readln() }.takeWhile { it != "" }
-    val rules = input.map { it.split("|") }.toList()
-    println("Read rules $rules")
-    val input2 = generateSequence { readlnOrNull() }
-    var ans = 0
-    input2.forEach { line ->
-        val nodes = line.split(",")
-        val g = Graph(false)
-        rules.forEach { (a, b) ->
-            if(a in nodes && b in nodes)
-                g.addEdge(b, a)
+    val rules = generateSequence { readln() }.takeWhile { it != "" }.toList()
+    val updates = generateSequence { readlnOrNull() }
+    var sum = 0
+    updates.forEach { line ->
+        val graph = Graph(isWeighted = false)
+        rules.forEach { rule ->
+            val (a, b) = rule.split("|")
+            if (a in line && b in line)
+                graph.addEdge(b, a)
         }
-        val order = g.topologicalSort()
-        val sortedNodes = nodes.sortedBy { order.indexOf(it) }
-        ans += sortedNodes[sortedNodes.size / 2].toInt()
+        val order = graph.topologicalSort()
+        sum += order[order.size / 2].toString().toInt()
     }
-    println(ans)
+    println(sum)
 }
